@@ -56,7 +56,7 @@ async function uploadZipFile (latestRelease) {
       region: awsBucketRegion,
       credentials: { accessKeyId: awsAccessKeyId, secretAccessKey: awsAccessSecret }
     })
-    const objectParams = { Bucket: awsBucketName, Key: `${repo}-${latestRelease.data.tag_name}.zip`, Body: fileContent }
+    const objectParams = { Bucket: awsBucketName, Key: `products/${repo}-${latestRelease.data.tag_name}.zip`, Body: fileContent }
     const results = await s3.send(new PutObjectCommand(objectParams))
     console.log(results)
 
