@@ -55,6 +55,7 @@ async function uploadZipFile (latestRelease) {
 
     console.log("S3 REGION")
     console.log(awsBucketRegion)
+    console.log(awsBucketName)
 
     const s3 = new S3Client({
       region: awsBucketRegion,
