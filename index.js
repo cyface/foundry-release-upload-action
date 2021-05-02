@@ -52,7 +52,11 @@ async function uploadZipFile (latestRelease) {
     const fileContent = fs.readFileSync(`${repo}.zip`)
 
     // Create an S3 client service object
-    const s3 = new S3Client({ region: awsBucketRegion })
+
+    const s3 = new S3Client({
+      region: awsBucketName,
+      credentials: { accessKeyId: awsAccessKeyId, secretAccessKey: awsAccessSecret }
+    })
     const objectParams = { Bucket: awsBucketName, Key: 'testfile', Body: 'Hello World!' }
     const results = await s3.send(new PutObjectCommand(objectParams))
     console.log(results)
