@@ -32,6 +32,7 @@ async function uploadManifest (latestRelease) {
     const manifestURL = `https://github.com/${owner}/${repo}/releases/download/${latestRelease.data.tag_name}/${manifestFileName}`
     await download(manifestURL, `./${repo}/${latestRelease.data.tag_name}/${manifestFileName}`)
     console.log(manifestURL)
+    await shell.exec(`ls`)
 
     // Commit and push updated manifest
     await shell.exec(`git config user.email "${committer_email}"`)
