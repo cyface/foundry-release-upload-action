@@ -27,7 +27,7 @@ async function getReleaseInfo () {
   })
 }
 
-async function updateManifest (latestRelease) {
+async function uploadManifest (latestRelease) {
   try {
     // Download updated manifest file
     const manifestURL = `https://github.com/${owner}/${repo}/releases/download/${latestRelease.data.tag_name}/system.json`
