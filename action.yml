@@ -1,0 +1,23 @@
+name: 'Foundry Release Upload Action'
+description: 'GitHub Action to Upload Foundry VTT Manifest and Zip After a Release'
+inputs:
+  actionToken:
+    description: 'Github Token'
+    required: true
+    default: 'World'
+  awsAccessKeyId:
+    description: 'AWS Access Key ID'
+    required: true
+  awsAccessSecret:
+    description: 'AWS Access Key ID'
+    required: true
+  awsBucketName:
+    description: 'AWS Bucket Name'
+    required: true
+  manifestFileName:
+    description: 'Name of the Foundry Manifest File, either system.json or module.json'
+    required: true
+    default: 'module.json'
+runs:
+  using: 'node12'
+  main: 'index.js'

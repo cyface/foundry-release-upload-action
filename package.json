@@ -1,0 +1,28 @@
+{
+  "name": "foundry-manifest-update-action",
+  "version": "0.1.0",
+  "description": "GitHub Action to Update Foundry VTT Manifest After a Release is Published",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foundryvtt-dcc/foundry-manifest-update-action.git"
+  },
+  "keywords": [
+    "GitHub",
+    "GitHub Action",
+    "Foundry VTT"
+  ],
+  "author": "Tim L. White (https://github.com/cyface)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/foundryvtt-dcc/foundry-manifest-update-action/issues"
+  },
+  "homepage": "https://github.com/foundryvtt-dcc/foundry-manifest-update-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.7",
+    "@actions/github": "^4.0.0",
+    "aws-sdk": "^2.897.0",
+    "download": "^8.0.0",
+    "shelljs": "^0.8.4"
+  }
+}
