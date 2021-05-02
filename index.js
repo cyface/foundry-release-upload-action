@@ -31,15 +31,15 @@ async function uploadManifest (latestRelease) {
   try {
     // Download updated manifest file
     const manifestURL = `https://github.com/${owner}/${repo}/releases/download/${latestRelease.data.tag_name}/system.json`
-    await download(manifestURL, '.')
+    await download(manifestURL, './${repo}')
 
     // Commit and push updated manifest
     await shell.exec(`git config user.email "${committer_email}"`)
     await shell.exec(`git config user.name "${committer_username}"`)
     await shell.exec(`ls`)
     await shell.exec(`git status`)
-    // await shell.exec(`git commit -am "Release ${latestRelease.data.tag_name}"`)
-    // await shell.exec(`git push origin main`)
+    await shell.exec(`git commit -am "Release ${latestRelease.data.tag_name}"`)
+    await shell.exec(`git push origin main`)
 
   } catch (error) {
     core.setFailed(error.message)
@@ -74,7 +74,7 @@ async function run () {
 
     const latestRelease = await getReleaseInfo()
     await uploadManifest(latestRelease)
-    // await uploadZipFile(latestRelease)
+    await uploadZipFile(latestRelease)
 
   } catch (error) {
     core.setFailed(error.message)
