@@ -53,6 +53,9 @@ async function uploadZipFile (latestRelease) {
 
     // Create an S3 client service object
 
+    console.log("S3 REGION")
+    console.log(awsBucketRegion)
+
     const s3 = new S3Client({
       region: awsBucketRegion,
       credentials: { accessKeyId: awsAccessKeyId, secretAccessKey: awsAccessSecret }
