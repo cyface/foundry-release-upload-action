@@ -1,11 +1,11 @@
 {
-  "name": "foundry-manifest-update-action",
+  "name": "foundry-release-upload-action",
   "version": "0.1.0",
-  "description": "GitHub Action to Update Foundry VTT Manifest After a Release is Published",
+  "description": "GitHub Action to Upload Foundry VTT Manifest and Zip After a Release is Published",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/foundryvtt-dcc/foundry-manifest-update-action.git"
+    "url": "git+https://github.com/foundryvtt-dcc/foundry-release-upload-action.git"
   },
   "keywords": [
     "GitHub",
@@ -15,9 +15,9 @@
   "author": "Tim L. White (https://github.com/cyface)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/foundryvtt-dcc/foundry-manifest-update-action/issues"
+    "url": "https://github.com/foundryvtt-dcc/foundry-release-upload-action/issues"
   },
-  "homepage": "https://github.com/foundryvtt-dcc/foundry-manifest-update-action#readme",
+  "homepage": "https://github.com/foundryvtt-dcc/foundry-release-upload-action#readme",
   "dependencies": {
     "@actions/core": "^1.2.7",
     "@actions/github": "^4.0.0",
