@@ -3,7 +3,7 @@
 const core = require('@actions/core')
 const fs = require('fs')
 const github = require('@actions/github')
-const { download } = require('download')
+const download = require('download')
 const shell = require('shelljs')
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3')
 
