@@ -3,7 +3,7 @@
 const core = require('@actions/core')
 const fs = require('fs')
 const github = require('@actions/github')
-const download = require('download')
+const { download } = require('download')
 const shell = require('shelljs')
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3')
 
@@ -54,7 +54,7 @@ async function uploadZipFile (latestRelease) {
     // Create an S3 client service object
 
     const s3 = new S3Client({
-      region: awsBucketName,
+      region: awsBucketRegion,
       credentials: { accessKeyId: awsAccessKeyId, secretAccessKey: awsAccessSecret }
     })
     const objectParams = { Bucket: awsBucketName, Key: 'testfile', Body: 'Hello World!' }
