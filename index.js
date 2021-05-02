@@ -36,8 +36,10 @@ async function uploadManifest (latestRelease) {
     // Commit and push updated manifest
     await shell.exec(`git config user.email "${committer_email}"`)
     await shell.exec(`git config user.name "${committer_username}"`)
-    await shell.exec(`git commit -am "Release ${latestRelease.data.tag_name}"`)
-    await shell.exec(`git push origin main`)
+    await shell.exec(`ls`)
+    await shell.exec(`git status`)
+    // await shell.exec(`git commit -am "Release ${latestRelease.data.tag_name}"`)
+    // await shell.exec(`git push origin main`)
 
   } catch (error) {
     core.setFailed(error.message)
@@ -51,14 +53,13 @@ async function uploadZipFile (latestRelease) {
     await download(manifestURL, '.')
     const fileContent = fs.readFileSync(`${repo}.zip`)
 
-    // Create an S3 client service object
+    // Upload the release zip to S3
     const s3 = new S3Client({
       region: awsBucketRegion,
       credentials: { accessKeyId: awsAccessKeyId, secretAccessKey: awsAccessSecret }
     })
-    const objectParams = { Bucket: awsBucketName, Key: `products/${repo}-${latestRelease.data.tag_name}.zip`, Body: fileContent }
-    const results = await s3.send(new PutObjectCommand(objectParams))
-    console.log(results)
+    const objectParams = { Bucket: awsBucketName, Key: `products/${repo}/${repo}-${latestRelease.data.tag_name}.zip`, Body: fileContent }
+    await s3.send(new PutObjectCommand(objectParams))
 
   } catch (error) {
     core.setFailed(error.message)
@@ -73,7 +74,7 @@ async function run () {
 
     const latestRelease = await getReleaseInfo()
     await uploadManifest(latestRelease)
-    await uploadZipFile(latestRelease)
+    // await uploadZipFile(latestRelease)
 
   } catch (error) {
     core.setFailed(error.message)
