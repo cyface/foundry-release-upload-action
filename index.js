@@ -5,11 +5,12 @@ const { fs } = require('fs')
 const { github } = require('@actions/github')
 const { download } = require('download')
 const { shell } = require('shelljs')
-const { AWS } = require('aws-sdk')
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3')
 
 const awsAccessKeyId = core.getInput('awsAccessKeyId')
 const awsAccessSecret = core.getInput('awsAccessSecret')
 const awsBucketName = core.getInput('awsBucketName')
+const awsBucketRegion = core.getInput('awsBucketRegion')
 const manifestFileName = core.getInput('manifestFileName')
 const actionToken = core.getInput('actionToken')
 const octokit = github.getOctokit(actionToken)
@@ -50,25 +51,11 @@ async function uploadZipFile (latestRelease) {
     await download(manifestURL, '.')
     const fileContent = fs.readFileSync(`${repo}.zip`)
 
-    const s3 = new AWS.S3({
-      accessKeyId: awsAccessKeyId,
-      secretAccessKey: awsAccessSecret
-    })
-
-    // Setting up S3 upload parameters
-    const params = {
-      Bucket: awsBucketName,
-      Key: `${repo}-${latestRelease.data.tag_name}.zip`,
-      Body: fileContent
-    }
-
-    // Uploading files to the bucket
-    s3.upload(params, function (err, data) {
-      if (err) {
-        throw err
-      }
-      console.log(`File uploaded successfully. ${data.Location}`)
-    })
+    // Create an S3 client service object
+    const s3 = new S3Client({ region: awsBucketRegion })
+    const objectParams = { Bucket: awsBucketName, Key: 'testfile', Body: 'Hello World!' }
+    const results = await s3.send(new PutObjectCommand(objectParams))
+    console.log(results)
 
   } catch (error) {
     core.setFailed(error.message)

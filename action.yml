@@ -14,6 +14,9 @@ inputs:
   awsBucketName:
     description: 'AWS Bucket Name'
     required: true
+  awsBucketRegion:
+    description: 'AWS Bucket Region'
+    required: true
   manifestFileName:
     description: 'Name of the Foundry Manifest File, either system.json or module.json'
     required: true
