@@ -11,9 +11,6 @@ const awsAccessKeyId = core.getInput('awsAccessKeyId')
 const awsAccessSecret = core.getInput('awsAccessSecret')
 const awsBucketName = core.getInput('awsBucketName')
 const awsBucketRegion = core.getInput('awsBucketRegion')
-console.log("REGION")
-console.log(awsBucketRegion)
-console.log(awsBucketName)
 const manifestFileName = core.getInput('manifestFileName')
 const actionToken = core.getInput('actionToken')
 const octokit = github.getOctokit(actionToken)
@@ -55,11 +52,6 @@ async function uploadZipFile (latestRelease) {
     const fileContent = fs.readFileSync(`${repo}.zip`)
 
     // Create an S3 client service object
-
-    console.log("S3 REGION")
-    console.log(awsBucketRegion)
-    console.log(awsBucketName)
-
     const s3 = new S3Client({
       region: awsBucketRegion,
       credentials: { accessKeyId: awsAccessKeyId, secretAccessKey: awsAccessSecret }
