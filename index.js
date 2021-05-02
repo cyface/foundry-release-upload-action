@@ -36,8 +36,6 @@ async function uploadManifest (latestRelease) {
     // Commit and push updated manifest
     await shell.exec(`git config user.email "${committer_email}"`)
     await shell.exec(`git config user.name "${committer_username}"`)
-    await shell.exec(`ls`)
-    await shell.exec(`git status`)
     await shell.exec(`git commit -am "Release ${latestRelease.data.tag_name}"`)
     await shell.exec(`git push origin main`)
 
