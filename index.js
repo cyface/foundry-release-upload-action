@@ -47,8 +47,8 @@ async function uploadManifest (latestRelease) {
 async function uploadZipFile (latestRelease) {
   try {
     // Download latest release zip
-    const manifestURL = `https://github.com/${owner}/${repo}/releases/download/${latestRelease.data.tag_name}/${repo}.zip`
-    await download(manifestURL, '.')
+    const packageURL = `https://github.com/${owner}/${repo}/releases/download/${latestRelease.data.tag_name}/${repo}.zip`
+    await download(packageURL, '.')
     const fileContent = fs.readFileSync(`${repo}.zip`)
 
     // Upload the release zip to S3
