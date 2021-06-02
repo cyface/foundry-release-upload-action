@@ -3,7 +3,6 @@
 const core = require('@actions/core')
 const fs = require('fs')
 const github = require('@actions/github')
-const download = require('download')
 const shell = require('shelljs')
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3')
 
@@ -28,9 +27,23 @@ async function getReleaseInfo () {
 
 async function uploadManifest (latestRelease) {
   try {
-    // Download updated manifest file
-    const manifestURL = `https://github.com/${owner}/${repo}/releases/download/${latestRelease.data.tag_name}/${manifestFileName}`
-    await download(manifestURL, `./${repo}/${latestRelease.data.tag_name}/${manifestFileName}`)
+    // Get the Asset ID of the manifest from the release info
+    let assetID = 0
+    for (const item of latestRelease.data.assets) {
+      if (item.name === manifestFileName) {
+        assetID = item.id
+      }
+    }
+    if (assetID === 0) {
+      console.log(latestRelease)
+      core.setFailed('No AssetID for manifest')
+    }
+
+    // Download Manifest
+    const manifestURL = `https://api.github.com/repos/${owner}/${repo}/releases/assets/${assetID}`
+    console.log(manifestURL)
+    await shell.exec(`curl --header 'Authorization: token ${actionToken}' --header 'Accept: application/octet-stream' --output ${manifestFileName} --location ${manifestURL}`)
+    console.log('Past Download')
 
     // Commit and push updated manifest
     await shell.exec(`git config user.email "${committer_email}"`)
@@ -46,9 +59,23 @@ async function uploadManifest (latestRelease) {
 
 async function uploadZipFile (latestRelease) {
   try {
-    // Download latest release zip
-    const packageURL = `https://github.com/${owner}/${repo}/releases/download/${latestRelease.data.tag_name}/${repo}.zip`
-    await download(packageURL, '.')
+    // Get the Asset ID of the zip from the release info
+    let assetID = 0
+    for (const item of latestRelease.data.assets) {
+      if (item.name === `${repo}.zip`) {
+        assetID = item.id
+      }
+    }
+    if (assetID === 0) {
+      console.log(latestRelease)
+      core.setFailed('No AssetID for manifest')
+    }
+
+    // Download the Zip
+    const zipURL = `https://api.github.com/repos/${owner}/${repo}/releases/assets/${assetID}`
+    console.log(zipURL)
+    await shell.exec(`curl --header 'Authorization: token ${actionToken}' --header 'Accept: application/octet-stream' --output ${repo}.zip --location ${zipURL}`)
+    console.log('Past Download')
     const fileContent = fs.readFileSync(`${repo}.zip`)
 
     // Upload the release zip to S3
