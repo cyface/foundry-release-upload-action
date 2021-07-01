@@ -41,3 +41,5 @@ jobs:
 For `manifestFileName` you will either enter `system.json` or `module.json` depending on your project.
 
 You should not need to change `actionToken` from the example above.
+
+You will need to create a GITHUB_CONTENT_TOKEN with permissions to edit the repo that you want to update if it's not the repo this action is running in.
