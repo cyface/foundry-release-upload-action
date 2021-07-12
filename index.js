@@ -44,17 +44,20 @@ async function uploadManifest (latestRelease) {
     }
 
     const manifestLocalFileName = `./${repo}/${latestRelease.data.tag_name}/${manifestFileName}`
+    console.log(manifestLocalFileName)
 
     // Download Manifest
     const manifestURL = `https://api.github.com/repos/${owner}/${repo}/releases/assets/${assetID}`
     console.log(manifestURL)
     await shell.exec(`curl --header 'Authorization: token ${actionToken}' --header 'Accept: application/octet-stream' --output ${manifestLocalFileName} --location ${manifestURL}`)
     console.log('Past Download')
+    console.log(shell.exec(`ls dcc-core-book`))
 
     // Commit and push updated manifest
     await shell.exec(`git config user.email "${committer_email}"`)
     await shell.exec(`git config user.name "${committer_username}"`)
     await shell.exec(`git add *`)
+    await shell.exec(`git status`)
     await shell.exec(`git commit -am "Release ${latestRelease.data.tag_name}"`)
     await shell.exec(`git push origin main`)
 
