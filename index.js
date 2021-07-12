@@ -44,6 +44,7 @@ async function uploadManifest (latestRelease) {
     }
 
     const manifestLocalFileName = `./${repo}/${latestRelease.data.tag_name}/${manifestFileName}`
+    await shell.exec(`./${repo}/${latestRelease.data.tag_name}`)
     console.log(manifestLocalFileName)
 
     // Download Manifest
