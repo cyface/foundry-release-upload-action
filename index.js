@@ -26,6 +26,10 @@ async function getReleaseInfo () {
 }
 
 async function uploadManifest (latestRelease) {
+  /*
+  This assumes that we are in a checkout of dcc-content
+  It downloads the latest manifest from the release and checks it in to dcc-content in a new dir
+   */
   try {
     // Get the Asset ID of the manifest from the release info
     let assetID = 0
@@ -39,10 +43,12 @@ async function uploadManifest (latestRelease) {
       core.setFailed('No AssetID for manifest')
     }
 
+    const manifestLocalFileName = `./${repo}/${latestRelease.data.tag_name}/${manifestFileName}`
+
     // Download Manifest
     const manifestURL = `https://api.github.com/repos/${owner}/${repo}/releases/assets/${assetID}`
     console.log(manifestURL)
-    await shell.exec(`curl --header 'Authorization: token ${actionToken}' --header 'Accept: application/octet-stream' --output ${manifestFileName} --location ${manifestURL}`)
+    await shell.exec(`curl --header 'Authorization: token ${actionToken}' --header 'Accept: application/octet-stream' --output ${manifestLocalFileName} --location ${manifestURL}`)
     console.log('Past Download')
 
     // Commit and push updated manifest
@@ -98,7 +104,7 @@ async function run () {
       core.setFailed('manifestFileName must be system.json or module.json')
 
     const latestRelease = await getReleaseInfo()
-    //await uploadManifest(latestRelease)
+    await uploadManifest(latestRelease)
     await uploadZipFile(latestRelease)
 
   } catch (error) {
