@@ -98,7 +98,7 @@ async function run () {
       core.setFailed('manifestFileName must be system.json or module.json')
 
     const latestRelease = await getReleaseInfo()
-    await uploadManifest(latestRelease)
+    //await uploadManifest(latestRelease)
     await uploadZipFile(latestRelease)
 
   } catch (error) {
