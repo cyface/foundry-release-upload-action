@@ -24,7 +24,7 @@ jobs:
     name: Foundry Release Upload
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_CONTENT_TOKEN }}
           ref: main
