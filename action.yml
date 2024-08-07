@@ -22,5 +22,5 @@ inputs:
     required: true
     default: 'module.json'
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'index.js'
