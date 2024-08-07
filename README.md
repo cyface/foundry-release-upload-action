@@ -2,7 +2,7 @@
 
 This GitHub Action enables you to release a Foundry VTT System or Module by simply updating the 'version.txt' file in your main branch.
 
-This is to be used with the `foundry-release-action`, and runs after a release is published to copy the manifest into main with the latest version information.
+This is to be used with the `foundry-release-action` which greates a GitHub release, and runs after a release is published to copy the manifest into main with the latest version information.
 
 ## Install Instructions
 
