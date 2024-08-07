@@ -26,7 +26,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_CONTENT_TOKEN }}
           ref: main
           repository: foundryvtt-dcc/dcc-content
 
@@ -39,6 +38,8 @@ jobs:
 ```
 
 For `manifestFileName` you will either enter `system.json` or `module.json` depending on your project.
+
+`repository` should also not change - it is the target repo for manifest files.
 
 You should not need to change `actionToken` from the example above.
 
