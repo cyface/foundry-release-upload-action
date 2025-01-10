@@ -54,6 +54,10 @@ async function uploadManifest (latestRelease) {
     console.log('Past Download')
     console.log(shell.exec(`ls dcc-core-book`))
 
+    // Save release notes to RELEASE_NOTES.md
+    const releaseNotes = latestRelease.data.body || 'No release notes available.'
+    fs.writeFileSync('RELEASE_NOTES.md', releaseNotes, 'utf8')
+
     // Commit and push updated manifest
     await shell.exec(`git config user.email "${committer_email}"`)
     await shell.exec(`git config user.name "${committer_username}"`)
