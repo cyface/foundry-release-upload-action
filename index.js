@@ -56,7 +56,7 @@ async function uploadManifest (latestRelease) {
 
     // Save release notes to RELEASE_NOTES.md
     const releaseNotes = latestRelease.data.body || 'No release notes available.'
-    fs.writeFileSync('RELEASE_NOTES.md', releaseNotes, 'utf8')
+    fs.writeFileSync(`${repo}/${latestRelease.data.tag_name}/RELEASE_NOTES.md`, releaseNotes, 'utf8')
 
     // Commit and push updated manifest
     await shell.exec(`git config user.email "${committer_email}"`)
